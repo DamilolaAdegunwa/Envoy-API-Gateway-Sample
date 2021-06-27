@@ -65,7 +65,7 @@ static_resources:
                   # host_rewrite: www.google.com
                   prefix_rewrite: "/coffee"
                   # cluster: service_google
-                  cluster: coffee_service
+                  cluster: secure_coffee_service
               - match:
                   prefix: "/t"
                 route:
@@ -110,6 +110,35 @@ static_resources:
     #   typed_config:
     #     "@type": type.googleapis.com/envoy.api.v2.auth.UpstreamTlsContext
     #     sni: www.google.com
+
+  - name: secure_coffee_service
+    # connect_timeout: 30s
+    connect_timeout: 0.25s
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    lb_policy: ROUND_ROBIN # Load Balancing Policy
+    load_assignment:
+      # cluster_name: service_google
+      cluster_name: secure_coffee_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                # address: www.google.com
+                # port_value: 443
+                address: coffeeapi # from docker compose, container name automatically converts to IP address
+                port_value: 443
+    ## THIS IS FOR HTTPS
+    transport_socket:
+      name: envoy.transport_sockets.tls
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+        sni: localhost
+      # typed_config:
+      #   "@type": type.googleapis.com/envoy.api.v2.auth.UpstreamTlsContext
+      #   sni: www.google.com
 
   - name: tea_service
     # connect_timeout: 30s
