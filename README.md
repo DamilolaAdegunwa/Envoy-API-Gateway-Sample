@@ -104,3 +104,8 @@ Certificates - Current User | Trusted Root Certification Authorities | Certifica
 it is exists... but why?... this one maybe is for Dot Net Core stuff...
 
 We now import the second certificate: ..\Envoy\https.crt
+
+
+
+# Reference:
+[Build an API Gateway with Envoy and use with .NET Core APIs](https://www.youtube.com/watch?v=UsoH5cqE1OA)
