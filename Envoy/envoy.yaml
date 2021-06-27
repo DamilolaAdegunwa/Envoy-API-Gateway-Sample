@@ -88,9 +88,3 @@ static_resources:
                 # port_value: 443
                 address: teaapi # from docker compose, container name automatically converts to IP address
                 port_value: 80
-    ## THIS IS FOR HTTPS
-    # transport_socket:
-    #   name: envoy.transport_sockets.tls
-    #   typed_config:
-    #     "@type": type.googleapis.com/envoy.api.v2.auth.UpstreamTlsContext
-    #     sni: www.google.com

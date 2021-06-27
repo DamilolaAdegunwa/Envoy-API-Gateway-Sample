@@ -44,7 +44,8 @@ namespace TeaAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TeaAPI v1"));
             }
 
-            app.UseHttpsRedirection();
+            // Do not redirect Incoming calls from Envoy (use envoy route)
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
