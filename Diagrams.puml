@@ -1,0 +1,19 @@
+@startuml API Gateway
+
+left to right direction
+
+agent Client as client #Black;line:Gray;line.bold;text:White;
+
+cloud "Internal Network" as in {
+    agent e as "Envoy     \n :9901 \n :10000 \n :10001 <<Cert>>"  #LightBlue;line:Gray;line.bold;
+    agent c as "CoffeeAPI \n :8080 \n :8081"                      #LightGoldenRodYellow;line:Gray;line.bold;
+    agent t as "TeaAPI    \n :8082 \n :8083"                      #PaleGreen;line:Gray;line.bold;
+}
+
+client -[hidden]-> in
+client -[#Green]-> e: https <<Envoy Cert>>
+
+e -[#Green]-> c: https
+e -[#Red]-> t: http
+
+@enduml
